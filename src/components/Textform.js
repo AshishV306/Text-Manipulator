@@ -64,6 +64,7 @@ const copy =()=>{
     let text=document.getElementById("mybox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
     props.showAlert("Text Copied", "Success");
 }
 
@@ -114,51 +115,51 @@ const [rWord, replaceWord] = useState("");
 const [ activeColor, setActiveColor ] = useState('');
   return (
     <>
-  <div>
-    <h2>{props.heading}</h2>
+  <div className="my-3">
+    <h2 style={{ color:props.mode==='dark'? 'white':'#042743'}}>{props.heading}</h2>
   
   <div className="mb-3">
-    <textarea className="form-control" value={text} onChange={onChange}  style={{ color: activeColor }} placeholder="Enter text "  name="" id="mybox"  rows="8"></textarea>
+    <textarea className="form-control" value={text} onChange={onChange}  style={{ color: props.mode==='dark'?'white':activeColor , backgroundColor:props.mode==='dark'? '#042743':'white'}} placeholder="Enter text "  name="" id="mybox"  rows="8"></textarea>
+    </div>
+    
+    <div className="mb-3">
+    <textarea className="form-control" value={fWord} onChange={onChangeFind} style={{backgroundColor:props.mode==='dark'? '#042743':'white', color: props.mode==='dark'?'white':'#042743'}} placeholder="Enter word to find" name="" id="mybox"  rows="3"></textarea>
     </div>
 
     <div className="mb-3">
-    <textarea className="form-control" value={fWord} onChange={onChangeFind} placeholder="Enter word to find" name="" id="mybox"  rows="3"></textarea>
+    <textarea className="form-control" value={rWord} onChange={onChangeReplace} style={{backgroundColor:props.mode==='dark'? '#042743':'white', color: props.mode==='dark'?'white':'#042743'}} placeholder="Enter word to replace" name="" id="mybox"  rows="3"></textarea>
     </div>
 
     <div className="mb-3">
-    <textarea className="form-control" value={rWord} onChange={onChangeReplace} placeholder="Enter word to replace" name="" id="mybox"  rows="3"></textarea>
+    <textarea className="form-control" value={color} onChange={changeColor} style={{backgroundColor:props.mode==='dark'? '#042743':'white', color: props.mode==='dark'?'white':'#042743'}} placeholder="Enter your color choice" name="" id="mybox"  rows="3"></textarea>
     </div>
 
-    <div className="mb-3">
-    <textarea className="form-control" value={color} onChange={changeColor} placeholder="Enter your color choice" name="" id="mybox"  rows="3"></textarea>
-    </div>
-
-    <button type="submit" onClick={upperCase} class="btn btn-primary">Convert to UpperCase</button>
+    <button disabled={text.length===0} type="submit" onClick={upperCase} class="btn btn-primary">Convert to UpperCase</button>
    
-    <button type="submit" onClick={speak} className="btn btn-warning mx-2 my-2" id="toggle">Speak</button>
+    <button disabled={text.length===0} type="submit" onClick={speak} className="btn btn-warning mx-2 my-2" id="toggle">Speak</button>
 
-    <button type="submit" onClick={Replace} className="btn btn-warning mx-2 my-2" id="toggle">Replace Word</button>
+    <button disabled={text.length===0} type="submit" onClick={Replace} className="btn btn-warning mx-2 my-2" id="toggle">Replace Word</button>
 
-    <button className="btn btn-primary mx-1" onClick={TitleCase}> Title case</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={TitleCase}> Title case</button>
 
-    <button className="btn btn-primary mx-1" onClick={italics}> italic case</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={italics}> italic case</button>
 
-    <button className="btn btn-primary mx-1" onClick={bold}> Bold case</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={bold}> Bold case</button>
 
-    <button className="btn btn-primary mx-1" onClick={copy}> Copy text</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={copy}> Copy text</button>
 
-    <button className="btn btn-primary mx-1" onClick={handleDuplicates}>Remove Duplicates</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleDuplicates}>Remove Duplicates</button>
 
-    {/* <button className="btn btn-primary mx-1" onClick={newColor}> Change Color</button> */}
+    {/* <button className="btn btn-primary mx-1 my-1" onClick={newColor}> Change Color</button> */}
 
-    <button className="btn btn-primary mx-1" onClick={handleClick}> Change Color</button>
+    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClick}> Change Color</button>
 
-    {/* <button className="btn btn-primary mx-1" onClick={copy}> Copy text</button> */}
+    {/* <button className="btn btn-primary mx-1 my-1" onClick={copy}> Copy text</button> */}
   
   </div>
   
-  <div className="conatiner my-3">
-<p>{text.split(" ").length} words and {text.length} characters</p>
+  <div className="conatiner my-3" style={{ color:props.mode==='dark'? 'white':'#042743'}}>
+<p>{text.split(" ").filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
   </div>
 
 
